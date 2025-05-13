@@ -2,7 +2,7 @@ export const parseInput = (input: string): string => {
 	return input.trimEnd();
 };
 
-const findChecksum = (init: string, diskLen: number): string => {
+export const findChecksum = (init: string, diskLen: number): string => {
 	let data = init;
 
 	while (data.length < diskLen) {

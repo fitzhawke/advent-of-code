@@ -14,8 +14,7 @@ const path = `${year}/day${day}`;
 const answers = {
 	ae: '01100',
 	ai: '00000100100001100',
-	be: -1,
-	bi: -1,
+	bi: '00011010100010010',
 };
 
 let input = promises.readFile(
@@ -37,10 +36,7 @@ describe(`${year}-day${day}-Part 1`, () => {
 });
 
 describe(`${year}-day${day}-Part 2`, () => {
-	it('should produce the correct value for example', async () => {
-		expect(part2(await example, fullTitle)).toEqual(answers.be);
-	});
 	it('should produce the correct value for input', async () => {
-		expect(part2(await input, fullTitle)).toEqual(answers.bi);
+		expect(part2(await input, fullTitle, 35651584)).toEqual(answers.bi);
 	});
 });
