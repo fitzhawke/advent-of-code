@@ -16,7 +16,7 @@ const genNewRow = (prev: string): string => {
 	return newRow.join('');
 };
 
-const countSafe = (initial: string, rows: number): number => {
+export const countSafe = (initial: string, rows: number): number => {
 	const countRow = (row: string): number =>
 		row.split('').reduce((acc, c) => (c === '.' ? acc + 1 : acc), 0);
 

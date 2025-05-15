@@ -14,7 +14,6 @@ const path = `${year}/day${day}`;
 const answers = {
 	ae: 38,
 	ai: 1978,
-	be: -1,
 	bi: -1,
 };
 
@@ -37,10 +36,7 @@ describe(`${year}-day${day}-Part 1`, () => {
 });
 
 describe(`${year}-day${day}-Part 2`, () => {
-	it('should produce the correct value for example', async () => {
-		expect(part2(await example, fullTitle)).toEqual(answers.be);
-	});
 	it('should produce the correct value for input', async () => {
-		expect(part2(await input, fullTitle)).toEqual(answers.bi);
+		expect(part2(await input, fullTitle, 400000)).toEqual(answers.bi);
 	});
 });
