@@ -2,11 +2,11 @@ export const parseInput = (input: string): number => {
 	return Number(input.trimEnd());
 };
 
-const buildCircle = (numElves: number): Map<number, number> => {
-	const elves = new Map<number, number>();
+export const buildCircle = (numElves: number): Set<number> => {
+	const elves = new Set<number>();
 
 	for (let i = 1; i <= numElves; i++) {
-		elves.set(i, 1);
+		elves.add(i);
 	}
 
 	return elves;
@@ -14,21 +14,20 @@ const buildCircle = (numElves: number): Map<number, number> => {
 
 const runGame = (numElves: number): number => {
 	const elves = buildCircle(numElves);
+	const iter = elves.keys();
 
 	while (elves.size > 1) {
-		const sorted = Array.from(elves.keys()).sort((a, b) => a - b);
-		for (let i = 0; i < sorted.length; i++) {
-			const curKey = sorted[i];
-			const curVal = elves.get(curKey);
-			const nextKey = sorted[(i + 1) % sorted.length];
-			elves.set(curKey, curVal + elves.get(nextKey));
-			elves.delete(nextKey);
-			i++;
-		}
+		const curKey = iter.next().value;
+		const nextKey = iter.next().value;
+
+		// Sets retain order. Could just use an array though.
+		elves.delete(curKey);
+		elves.add(curKey);
+		elves.delete(nextKey);
 	}
 
-	for (const key of elves.keys()) {
-		return key;
+	for (const num of elves.keys()) {
+		return num;
 	}
 
 	return 0;
