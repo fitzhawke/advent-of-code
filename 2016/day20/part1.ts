@@ -13,7 +13,7 @@ export const parseInput = (input: string): RangeType[] => {
 		});
 };
 
-const findLowest = (ranges: RangeType[]): number => {
+export const mergeRanges = (ranges: RangeType[]): RangeType[] => {
 	while (true) {
 		let done = true;
 		const newRanges: RangeType[] = [];
@@ -24,7 +24,7 @@ const findLowest = (ranges: RangeType[]): number => {
 
 			if (r1.high + 1 < r2.low) {
 				newRanges.push(r1);
-				if (i === ranges.length - 1) newRanges.push(r2);
+				if (i === ranges.length - 2) newRanges.push(r2);
 				continue;
 			}
 
@@ -34,17 +34,17 @@ const findLowest = (ranges: RangeType[]): number => {
 				high: Math.max(r1.high, r2.high),
 			});
 			i++;
+			if (i === ranges.length - 2) newRanges.push(ranges.at(-1));
 		}
 		if (done) break;
 		else ranges = newRanges;
 	}
-	console.log(ranges);
-	return ranges[0].high + 1;
+	return ranges;
 };
 
 const main = (input: string): number => {
 	const ranges = parseInput(input);
-	return findLowest(ranges);
+	return mergeRanges(ranges)[0].high + 1;
 };
 
 export default function (input: string, title: string): number {
