@@ -1,10 +1,11 @@
-type NodeType = {
+export type NodeType = {
 	r: number;
 	c: number;
 	size: number;
 	used: number;
 	avail: number;
 	per: number;
+	target?: boolean;
 };
 
 export const parseInput = (input: string): NodeType[] => {
