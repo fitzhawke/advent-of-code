@@ -1,48 +1,50 @@
-type OpType = {
+export type OpType = {
 	op: 'sp' | 'sl' | 'rl' | 'rr' | 'rb' | 'rp' | 'mp' | '';
 	p1?: string;
 	p2?: string;
 };
 
-const swapPosition = (s: string, p1: string, p2: string): string => {
-	let sArr = s.split('');
-	const l1 = s.charAt(Number(p1));
-	const l2 = s.charAt(Number(p2));
-	sArr[Number(p1)] = l2;
-	sArr[Number(p2)] = l1;
-	return sArr.join('');
-};
+export const operations = {
+	swapPosition: (s: string, p1: string, p2: string): string => {
+		let sArr = s.split('');
+		const l1 = s.charAt(Number(p1));
+		const l2 = s.charAt(Number(p2));
+		sArr[Number(p1)] = l2;
+		sArr[Number(p2)] = l1;
+		return sArr.join('');
+	},
 
-const swapLetter = (s: string, l1: string, l2: string = ''): string =>
-	s.replace(l1, '_').replace(l2, l1).replace('_', l2);
+	swapLetter: (s: string, l1: string, l2: string = ''): string =>
+		s.replace(l1, '_').replace(l2, l1).replace('_', l2),
 
-const rotate = (s: string, steps: string): string => {
-	let num = Number(steps);
-	while (num < 0) num += s.length;
-	num = num % s.length;
-	const sNum = s.length - num;
-	return s.substring(sNum) + s.substring(0, sNum);
-};
+	rotate: (s: string, steps: string): string => {
+		let num = Number(steps);
+		while (num < 0) num += s.length;
+		num = num % s.length;
+		const sNum = s.length - num;
+		return s.substring(sNum) + s.substring(0, sNum);
+	},
 
-const rotateLeft = (s: string, steps: string): string =>
-	rotate(s, `${Number(steps) * -1}`);
+	rotateLeft: (s: string, steps: string): string =>
+		operations.rotate(s, `${Number(steps) * -1}`),
 
-const rotateLetter = (s: string, l: string): string => {
-	const idx = s.indexOf(l);
-	const rotNum = idx >= 4 ? 2 + idx : 1 + idx;
-	return rotate(s, `${rotNum}`);
-};
+	rotateLetter: (s: string, l: string): string => {
+		const idx = s.indexOf(l);
+		const rotNum = idx >= 4 ? 2 + idx : 1 + idx;
+		return operations.rotate(s, `${rotNum}`);
+	},
 
-const reverse = (s: string, p1: string, p2: string): string => {
-	const s2 = s.substring(Number(p1), Number(p2) + 1);
-	const s2Rev = s2.split('').reverse().join('');
-	return s.replace(s2, s2Rev);
-};
+	reverse: (s: string, p1: string, p2: string): string => {
+		const s2 = s.substring(Number(p1), Number(p2) + 1);
+		const s2Rev = s2.split('').reverse().join('');
+		return s.replace(s2, s2Rev);
+	},
 
-const move = (s: string, p1: string, p2: string): string => {
-	const sArr = s.split('');
-	const [l] = sArr.splice(Number(p1), 1);
-	return sArr.toSpliced(Number(p2), 0, l).join('');
+	move: (s: string, p1: string, p2: string): string => {
+		const sArr = s.split('');
+		const [l] = sArr.splice(Number(p1), 1);
+		return sArr.toSpliced(Number(p2), 0, l).join('');
+	},
 };
 
 export const parseInput = (input: string): OpType[] => {
@@ -88,25 +90,25 @@ const performOps = (s: string, ops: OpType[]): string => {
 	for (const op of ops) {
 		switch (op.op) {
 			case 'sp':
-				str = swapPosition(str, op.p1, op.p2);
+				str = operations.swapPosition(str, op.p1, op.p2);
 				break;
 			case 'sl':
-				str = swapLetter(str, op.p1, op.p2);
+				str = operations.swapLetter(str, op.p1, op.p2);
 				break;
 			case 'rl':
-				str = rotateLeft(str, op.p1);
+				str = operations.rotateLeft(str, op.p1);
 				break;
 			case 'rr':
-				str = rotate(str, op.p1);
+				str = operations.rotate(str, op.p1);
 				break;
 			case 'rb':
-				str = rotateLetter(str, op.p1);
+				str = operations.rotateLetter(str, op.p1);
 				break;
 			case 'rp':
-				str = reverse(str, op.p1, op.p2);
+				str = operations.reverse(str, op.p1, op.p2);
 				break;
 			case 'mp':
-				str = move(str, op.p1, op.p2);
+				str = operations.move(str, op.p1, op.p2);
 				break;
 			default:
 				break;
