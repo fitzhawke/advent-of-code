@@ -1,21 +1,19 @@
-export const parseInput = (input: string): number[] => {
-	return input
-		.trimEnd()
-		.split('\n')
-		.map((c) => Number(c.replace('R', '').replace('L', '-')));
-};
-
-export const mod = (n: number, m: number): number => {
-	return ((n % m) + m) % m;
-};
+import { mod, parseInput } from './part1.ts';
 
 const countZero = (rotations: number[], startVal: number = 50): number => {
 	let zeroes = 0;
 	let val = startVal;
 
 	for (const rot of rotations) {
-		val = mod(val + rot, 100);
-		if (val === 0) zeroes++;
+		const newVal = val + rot;
+
+		if (val !== 0 && newVal <= 0) zeroes++;
+
+		if (Math.abs(newVal) >= 100) {
+			zeroes += Math.floor(Math.abs(newVal) / 100);
+		}
+
+		val = mod(newVal, 100);
 	}
 
 	return zeroes;
@@ -27,7 +25,7 @@ const main = (input: string): number => {
 };
 
 export default function (input: string, title: string): number {
-	console.log(`\n${title}\nPart 1`);
+	console.log(`\n${title}\nPart 2`);
 	console.time('Time elapsed');
 	const result = main(input);
 	console.timeEnd('Time elapsed');
