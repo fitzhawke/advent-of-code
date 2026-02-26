@@ -1,24 +1,19 @@
+import { calcMaxVolt } from './part2.ts';
+
 export const parseInput = (input: string): string[] => {
 	return input.trimEnd().split('\n');
 };
 
-const findMaxVal = (str: string): string => {
+export const findMaxVal = (str: string): string => {
 	const max = str
 		.split('')
 		.reduce((a, c) => (Number(c) > Number(a) ? c : a), '0');
 	return max;
 };
 
-const calcMaxVolt = (bank: string): number => {
-	const firstVal = findMaxVal(bank.slice(0, bank.length - 1));
-	const secondVal = findMaxVal(bank.slice(bank.indexOf(firstVal) + 1));
-
-	return Number([firstVal, secondVal].join(''));
-};
-
 const main = (input: string): number => {
 	const banks = parseInput(input);
-	return banks.reduce((a, c) => a + calcMaxVolt(c), 0);
+	return banks.reduce((a, c) => a + calcMaxVolt(c, 2), 0);
 };
 
 export default function (input: string, title: string): number {
